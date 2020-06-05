@@ -15,6 +15,7 @@ const useStyles = makeStyles({
         overflow: 'hidden',
     },
     customlogo: {
+        left: '10px',
         width: '25px',
         height: '25px',
         padding: '10px'

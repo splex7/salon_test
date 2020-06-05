@@ -7,6 +7,7 @@ import { Edit, EditButton, SimpleForm, TextInput, BooleanInput, DateInput, Selec
 import { useShowController, ReferenceManyField, Show, ShowButton, TabbedShowLayout, Tab, ArrayField } from 'react-admin';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { Card, CardContent, CardHeader, Button, Typography, CardActions  } from '@material-ui/core';
 
 export const PostList = props => (
     <List {...props}>
@@ -93,7 +94,7 @@ const useStyles = makeStyles({
             padding: "10px",
             margin: "10px",
             outline: "1px solid #eee",
-            flex: "1 0 300px",
+            flex: "1 0 200px",
             flexFlow: "column wrap",
             flexDirection: "column",
             background: "#fdfdfd",
@@ -106,17 +107,18 @@ const useStyles = makeStyles({
     },
 });
 
-const MyTabbedShowLayout = props => {
-    const classes = useStyles();
-    return <TabbedShowLayout className={classes.myPerfectLayout} {...props} />;
-};
 
 export const PostShow = (props) => {
+    const classes = useStyles();
     return(
         <MyShow {...props}>
-            <MyTabbedShowLayout>
-                <Tab label="도시서사DB 요약">
-                    <TextField source="제목" />
+            <TabbedShowLayout className={classes.myPerfectLayout}>
+                <Tab label="도시서사DB">
+                    <Card>
+                        <CardContent>
+                            <TextField source="제목" />
+                        </CardContent>
+                    </Card>
                     <TextField source="작자" />
                     <TextField source="도시" />
                     <TextField source="세부주소" />
@@ -143,7 +145,7 @@ export const PostShow = (props) => {
                     </ReferenceField>
                 </Tab>
 
-            </MyTabbedShowLayout>
+            </TabbedShowLayout>
         </MyShow>
     );
 }
