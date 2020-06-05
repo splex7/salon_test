@@ -114,11 +114,7 @@ export const PostShow = (props) => {
         <MyShow {...props}>
             <TabbedShowLayout className={classes.myPerfectLayout}>
                 <Tab label="도시서사DB">
-                    <Card>
-                        <CardContent>
-                            <TextField source="제목" />
-                        </CardContent>
-                    </Card>
+                    <TextField source="제목" />
                     <TextField source="작자" />
                     <TextField source="도시" />
                     <TextField source="세부주소" />
