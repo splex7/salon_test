@@ -11,9 +11,12 @@ import UserIcon from '@material-ui/icons/Group';
 import Dashboard from './Dashboard';
 import MyLayout from './MyLayout';
 
+import authProvider from './authProvider';
+
+
 const dataProvider = jsonServerProvider('https://my-json-server.typicode.com/splex7/fake-json-db');
 const App = () => (
-  <Admin dashboard={Dashboard} layout={MyLayout}  dataProvider={dataProvider}>
+  <Admin dashboard={Dashboard} authProvider={authProvider} layout={MyLayout}  dataProvider={dataProvider}>
     <Resource name ="posts" list={PostList} edit={PostEdit} show={PostShow} icon={PostIcon} />
     <Resource name ="users" list={UserList} icon={UserIcon} />
   </Admin>

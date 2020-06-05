@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     },
     spacer: {
         flex: 1,
-        color: 'black',
+        color: 'inherit',
         fontWeight: '800',
         fontSize: '1.5rem'
 
