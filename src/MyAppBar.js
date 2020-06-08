@@ -15,12 +15,14 @@ const useStyles = makeStyles({
         overflow: 'hidden',
     },
     customlogo: {
+        transform : 'translateX(-10px)',
         left: '10px',
         width: '25px',
         height: '25px',
         padding: '10px'
     },
     spacer: {
+        transform : 'translateX(-10px)',
         flex: 1,
         color: 'inherit',
         fontWeight: '800',
@@ -41,7 +43,6 @@ const MyAppBar = props => {
             />
 
             <img className={classes.customlogo} src={MyLogo} alt="React Logo" />
-
             <span className={classes.spacer} > Salon
             </span>
         </AppBar>
