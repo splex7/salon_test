@@ -2,9 +2,9 @@ import * as React from "react";
 import { SimpleList, List, Datagrid, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
 import MyTextField from './myTextField';
 
-import { Edit, EditButton, SimpleForm, TextInput, BooleanInput, DateInput, SelectInput, ReferenceInput } from 'react-admin';
+import { Create, Edit, EditButton, ShowButton, SimpleForm, TextInput, BooleanInput, DateInput, SelectInput, ReferenceInput } from 'react-admin';
 
-import { useShowController, ReferenceManyField, Show, ShowButton, TabbedShowLayout, Tab, ArrayField } from 'react-admin';
+import { Filter } from 'react-admin';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, CardHeader, Button, Typography, CardActions  } from '@material-ui/core';
@@ -16,15 +16,17 @@ export const PostList = props => {
 
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     return(
-        <List {...props}>
+        <List filters={<PostFilter />} {...props}>
 
             {isSmall ? (
+                //use simpleList for mobile
                 <SimpleList
                     primaryText={record => `${record.도시}:${record.작품속지명}`}
                     secondaryText={record => `${record.작자}의 ${record.제목}`}
                     tertiaryText={record => `${record.서사양식}`}
                 />
             ) : (
+                //use Datagrid for Desktop
                 <Datagrid>
                     <TextField source="id" />
                     <TextField source="제목" />
@@ -50,6 +52,39 @@ export const PostList = props => {
         </List>
     );
 }
+
+const PostFilter = (props) => (
+    <Filter {...props}>
+        <TextInput label="검색" source="q" alwaysOn />
+        <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
+            <SelectInput optionText="name" />
+        </ReferenceInput>
+    </Filter>
+);
+
+export const PostCreate = props => (
+    <Create {...props}>
+        <SimpleForm>
+            <TextInput disabled source="id" />
+            <TextInput source="도시" />
+            <TextInput source="세부주소" />
+            <TextInput source="작품속지명" />
+            <TextInput source="서사양식" />
+            <TextInput source="서사성격" />
+            <TextInput source="작자" />
+            <TextInput source="서사분류" />
+            <TextInput source="제목" />
+            <DateInput source="발표연도" />
+            <TextInput multiline source="비고" />
+            <TextInput multiline source="인용문" />
+            <TextInput multiline source="내용" />
+            <TextInput source="첨부자료" />
+            <BooleanInput source="전문확보" />
+            <ReferenceInput source="userId" reference="users"><SelectInput optionText="name" /></ReferenceInput>
+        </SimpleForm>
+    </Create>
+);
+
 export const PostEdit = props => (
     <Edit {...props}>
         <SimpleForm>

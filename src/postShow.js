@@ -1,8 +1,10 @@
 import * as React from "react";
 import { List, Datagrid, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
-import { useShowController, ReferenceManyField, Show, ShowButton, TabbedShowLayout, Tab, ArrayField } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
+import { useGetOne, useShowController, ReferenceManyField, Show, ShowButton, TabbedShowLayout, SimpleShowLayout, Tab, ArrayField } from 'react-admin';
 
+//Design
+import { makeStyles } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
 
 const MyShow = props => {
     const {
@@ -26,68 +28,84 @@ const MyShow = props => {
     );
 }
 
-const useStyles = makeStyles({
-    myPerfectLayout: {
+const useStyles = makeStyles((theme) => ({
+  root: {
 
-        maxWidth: "960px",
-        background: "#efefef",
-        padding: "10px",
-        '& .RaTabbedShowLayout-content-25 span' : {
-            display: "flex",
-            flexWrap: "wrap",
-        },
-        '& .ra-field' : {
-            padding: "10px",
-            margin: "10px",
-            outline: "1px solid #eee",
-            flex: "1 0 200px",
-            flexFlow: "column wrap",
-            flexDirection: "column",
-            background: "#fdfdfd",
+    '& > div > span': {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexFlow: 'row wrap',
+        alignItems: 'stretch',
+      },
+    '& .ra-field': {
+        padding: theme.spacing(1),
+        margin : theme.spacing(1),
+        flex : '1 1 30%',
+        outline: '1px solid #aaa',
 
-        },
-        '& ~123div>span': {
-            background: 'red'
-        }
-        // This is JSS syntax to target a deeper element using css selector, here the svg icon for this button
+
     },
-});
-
+  },
+  purpleBoldText: {
+    color: theme.palette.secondary.main,
+    fontWeight: '800',
+    fontSize: '1.2rem',
+  },
+}));
 
 export const PostShow = (props) => {
     const classes = useStyles();
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     return(
         <MyShow {...props}>
-            <TabbedShowLayout className={classes.myPerfectLayout}>
+            {isSmall ? (
+              <SimpleShowLayout>
+                <TextField source="제목"  />
+                <TextField source="작자" />
+                <TextField source="도시" />
+                <TextField source="세부주소" />
+                <TextField source="작품속지명" />
+                <ChipField source="서사양식" />
+                <ChipField source="서사성격" />
+                <TextField source="서사분류" />
+                <DateField source="발표연도" />
+                <BooleanField label="전문확보여부" source="전문확보" />
+                <ImageField source="첨부자료" />
+                <TextField source="내용" />
+                <TextField source="인용문" />
+                <TextField source="비고" />
+                <ReferenceField label="작성자" source="userId" reference="users">
+                  <TextField source="name" />
+                </ReferenceField>
+              </SimpleShowLayout>
+            ) : (
+              <TabbedShowLayout className={classes.root} >
                 <Tab label="도시서사DB">
-                    <TextField source="제목" />
-                    <TextField source="작자" />
-                    <TextField source="도시" />
-                    <TextField source="세부주소" />
-                    <TextField source="작품속지명" />
-                    <ChipField source="서사양식" />
-                    <ChipField source="서사성격" />
-
-                    <TextField source="서사분류" />
-
-                    <DateField source="발표연도" />
-
-                    <BooleanField label="전문확보여부" source="전문확보" />
-                    <ImageField source="첨부자료" />
-
+                  <TextField source="제목" className={classes.purpleBoldText} />
+                  <TextField source="작자" />
+                  <TextField source="도시" />
+                  <TextField source="세부주소" />
+                  <TextField source="작품속지명" />
+                  <ChipField source="서사양식" />
+                  <ChipField source="서사성격" />
+                  <TextField source="서사분류" />
+                  <DateField source="발표연도" />
+                  <BooleanField label="전문확보여부" source="전문확보" />
+                  <ImageField source="첨부자료" />
                 </Tab>
                 <Tab label="본문 및 인용문">
-                    <TextField source="내용" />
-                    <TextField source="인용문" />
-                    <TextField source="비고" />
+                  <TextField source="내용" />
+                  <TextField source="인용문" />
+                  <TextField source="비고" />
                 </Tab>
                 <Tab label="작성자">
-                    <ReferenceField label="작성자" source="userId" reference="users">
-                        <TextField source="name" />
-                    </ReferenceField>
+                  <ReferenceField label="작성자" source="userId" reference="users">
+                    <TextField source="name" />
+                  </ReferenceField>
                 </Tab>
 
-            </TabbedShowLayout>
+              </TabbedShowLayout>
+            )}
         </MyShow>
     );
 }
