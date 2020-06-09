@@ -1,8 +1,8 @@
 import * as React from "react";
 import { SimpleList, List, Datagrid, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
-import MyTextField from './myTextField';
 
 import { Create, Edit, EditButton, ShowButton, SimpleForm, TextInput, BooleanInput, DateInput, SelectInput, ReferenceInput } from 'react-admin';
+import { ArrayInput, NumberInput, AutocompleteInput, RadioButtonGroupInput, SimpleFormIterator } from 'react-admin';
 
 import { Filter } from 'react-admin';
 
@@ -24,6 +24,7 @@ export const PostList = props => {
                     primaryText={record => `${record.도시}:${record.작품속지명}`}
                     secondaryText={record => `${record.작자}의 ${record.제목}`}
                     tertiaryText={record => `${record.서사양식}`}
+                    linkType="show"
                 />
             ) : (
                 //use Datagrid for Desktop
@@ -36,9 +37,7 @@ export const PostList = props => {
                     <TextField source="작품속지명" />
                     <ChipField source="서사양식" />
                     <ChipField source="서사성격" />
-
                     <TextField source="서사분류" />
-
                     <DateField source="발표연도" />
                     <ImageField source="첨부자료" />
                     <BooleanField source="전문확보" />
@@ -65,22 +64,39 @@ const PostFilter = (props) => (
 export const PostCreate = props => (
     <Create {...props}>
         <SimpleForm>
-            <TextInput disabled source="id" />
             <TextInput source="도시" />
             <TextInput source="세부주소" />
             <TextInput source="작품속지명" />
-            <TextInput source="서사양식" />
-            <TextInput source="서사성격" />
+            <SelectInput source="서사양식" choices={[
+                { id: '소설', name: '소설' },
+                { id: '시', name: '시' },
+                { id: '수필', name: '수필' },
+                { id: '비평', name: '비평' },
+                { id: '희곡', name: '희곡' },
+                { id: '사진', name: '사진' },
+                { id: '영상', name: '영상' },
+                { id: '연극', name: '연극' },
+                { id: '문화', name: '문화' },
+                { id: '관광', name: '관광' },
+            ]} />
+            <SelectInput source="서사성격" choices={[
+                { id: '문학', name: '문학' },
+                { id: '비문학', name: '비문학' },
+            ]} />
             <TextInput source="작자" />
             <TextInput source="서사분류" />
             <TextInput source="제목" />
             <DateInput source="발표연도" />
-            <TextInput multiline source="비고" />
-            <TextInput multiline source="인용문" />
+            <ArrayInput source="인용문">
+              <SimpleFormIterator>
+                  <TextInput label="본문내용" multiline source="content" />
+                  <NumberInput label="페이지" source="page" />
+              </SimpleFormIterator>
+            </ArrayInput>
             <TextInput multiline source="내용" />
+            <TextInput multiline source="비고" />
             <TextInput source="첨부자료" />
             <BooleanInput source="전문확보" />
-            <ReferenceInput source="userId" reference="users"><SelectInput optionText="name" /></ReferenceInput>
         </SimpleForm>
     </Create>
 );
@@ -92,18 +108,37 @@ export const PostEdit = props => (
             <TextInput source="도시" />
             <TextInput source="세부주소" />
             <TextInput source="작품속지명" />
-            <TextInput source="서사양식" />
-            <TextInput source="서사성격" />
+            <SelectInput source="서사양식" choices={[
+                { id: '소설', name: '소설' },
+                { id: '시', name: '시' },
+                { id: '수필', name: '수필' },
+                { id: '비평', name: '비평' },
+                { id: '희곡', name: '희곡' },
+                { id: '사진', name: '사진' },
+                { id: '영상', name: '영상' },
+                { id: '연극', name: '연극' },
+                { id: '문화', name: '문화' },
+                { id: '관광', name: '관광' },
+            ]} />
+            <SelectInput source="서사성격" choices={[
+                { id: '문학', name: '문학' },
+                { id: '비문학', name: '비문학' },
+            ]} />
             <TextInput source="작자" />
             <TextInput source="서사분류" />
             <TextInput source="제목" />
             <DateInput source="발표연도" />
-            <TextInput multiline source="비고" />
-            <TextInput multiline source="인용문" />
+            <ArrayInput source="인용문">
+              <SimpleFormIterator>
+                  <TextInput label="본문내용" multiline source="content" />
+                  <NumberInput label="페이지" source="page" />
+              </SimpleFormIterator>
+            </ArrayInput>
             <TextInput multiline source="내용" />
+            <TextInput multiline source="비고" />
             <TextInput source="첨부자료" />
             <BooleanInput source="전문확보" />
-            <ReferenceInput source="userId" reference="users"><SelectInput optionText="name" /></ReferenceInput>
+
         </SimpleForm>
     </Edit>
 );
