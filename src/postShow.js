@@ -1,5 +1,5 @@
 import * as React from "react";
-import { List, Datagrid, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
+import { List, Datagrid, SingleFieldList, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
 import { useGetOne, useShowController, ReferenceManyField, Show, ShowButton, TabbedShowLayout, SimpleShowLayout, Tab, ArrayField } from 'react-admin';
 
 //Design
@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
   purpleBoldText: {
     color: theme.palette.secondary.main,
     fontWeight: '800',
-    fontSize: '1.2rem',
   },
 }));
 
@@ -80,7 +79,7 @@ export const PostShow = (props) => {
               </SimpleShowLayout>
             ) : (
               <TabbedShowLayout className={classes.root} >
-                <Tab label="도시서사DB">
+                <Tab label="기본정보">
                   <TextField source="제목" className={classes.purpleBoldText} />
                   <TextField source="작자" />
                   <TextField source="도시" />
@@ -92,18 +91,20 @@ export const PostShow = (props) => {
                   <DateField source="발표연도" />
                   <BooleanField label="전문확보여부" source="전문확보" />
                   <ImageField source="첨부자료" />
-                </Tab>
-                <Tab label="본문 및 인용문">
-                  <TextField source="내용" />
-                  <TextField source="인용문" />
-                  <TextField source="비고" />
-                </Tab>
-                <Tab label="작성자">
                   <ReferenceField label="작성자" source="userId" reference="users">
                     <TextField source="name" />
                   </ReferenceField>
                 </Tab>
-
+                <Tab label="본문 및 인용문">
+                  <TextField source="내용" />
+                  <ArrayField source="인용문">
+                     <Datagrid>
+                      <TextField source="content" />
+                      <TextField source="page" />
+                     </Datagrid>
+                  </ArrayField>
+                  <TextField source="비고" />
+                </Tab>
               </TabbedShowLayout>
             )}
         </MyShow>
