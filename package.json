@@ -13,6 +13,7 @@
     "react-admin": "^3.5.5",
     "react-admin-firebase": "^3.1.24",
     "react-dom": "^16.13.1",
+    "react-firebaseui": "^4.1.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {

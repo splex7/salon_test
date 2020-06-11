@@ -12,9 +12,9 @@ import UserIcon from '@material-ui/icons/Group';
 import Dashboard from './Dashboard';
 import MyLayout from './MyLayout';
 
-import authProvider from './authProvider';
-import LoginPage from './LoginPage';
 
+import LoginPage from './LoginPage';
+import CustomLoginPage from './CustomLoginPage'
 import lightTheme from './theme';
 
 // firebase ..
@@ -29,9 +29,10 @@ import config from './config';
 const options = {};
 
 const dataProvider = FirebaseDataProvider(config, options);
+const authProvider = FirebaseAuthProvider(config, options);
 // const dataProvider = jsonServerProvider('https://my-json-server.typicode.com/splex7/fake-json-db');
 const App = () => (
-    <Admin theme={lightTheme} loginPage={LoginPage} dashboard={Dashboard} authProvider={authProvider} layout={MyLayout}  dataProvider={dataProvider}>
+    <Admin theme={lightTheme} loginPage={CustomLoginPage} dashboard={Dashboard} authProvider={authProvider} layout={MyLayout}  dataProvider={dataProvider}>
         <Resource name ="posts" list={PostList} create={PostCreate} edit={PostEdit} show={PostShow} icon={PostIcon} />
         <Resource name ="users" list={UserList} icon={UserIcon} />
     </Admin>
