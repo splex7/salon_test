@@ -12,15 +12,6 @@ import { Card, CardContent, CardHeader, Button, Typography, CardActions  } from 
 import { useMediaQuery } from '@material-ui/core';
 
 const PostFilter = (props) => (
-    // <Filter {...props}>
-    //     // <TextInput label="검색" source="q" alwaysOn />
-    //     // <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
-    //     //     <SelectInput optionText="name" />
-    //     // </ReferenceInput>
-    //     // <TextInput label="Title" source="title" defaultValue="Hello, World!" />
-    //     <TextInput label="Search" source="q" alwaysOn />
-    //     <TextInput label="Title" source="title" defaultValue="Hello, World!" />
-    // </Filter>
     <Filter {...props}>
         <TextInput label="제목" source="제목" defaultValue="" />
         <TextInput label="작자" source="작자" defaultValue="" />
