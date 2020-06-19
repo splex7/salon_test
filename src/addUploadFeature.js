@@ -16,7 +16,7 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
  * For posts update only, convert uploaded image in base 64 and attach it to
  * the `picture` sent property, with `src` and `title` attributes.
  */
-const addUploadFeature = requestHandler => (type, resource, params) => {
+export const addUploadFeature = requestHandler => (type, resource, params) => {
     if (type === 'UPDATE' && resource === 'posts') {
         // notice that following condition can be true only when `<ImageInput source="pictures" />` component has parameter `multiple={true}`
         // if parameter `multiple` is false, then data.pictures is not an array, but single object
@@ -42,5 +42,3 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
     // for other request types and resources, fall back to the default request handler
     return requestHandler(type, resource, params);
 };
-
-export default addUploadFeature;

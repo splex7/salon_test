@@ -5,18 +5,15 @@ import { Admin, Resource } from 'react-admin'
 import { UserList } from './users';
 import { PostShow } from './postShow';
 import { PostList, PostEdit, PostCreate} from './posts';
-import  addUploadFeature  from './addUploadFeature'
+import { addUploadFeature } from './addUploadFeature';
 
 import PostIcon from '@material-ui/icons/Book';
 import UserIcon from '@material-ui/icons/Group';
 
 import Dashboard from './Dashboard';
 import MyLayout from './MyLayout';
-
-
-import LoginPage from './LoginPage';
-import CustomLoginPage from './CustomLoginPage'
-import lightTheme from './theme';
+import CustomLoginPage from './CustomLoginPage';
+import { lightTheme } from './theme';
 
 // firebase ..
 import {
@@ -31,7 +28,6 @@ const options = {};
 
 const dataProvider = FirebaseDataProvider(config, options);
 const authProvider = FirebaseAuthProvider(config, options);
-
 const uploadCapableDataProvider = addUploadFeature(dataProvider);
 
 // const dataProvider = jsonServerProvider('https://my-json-server.typicode.com/splex7/fake-json-db');
