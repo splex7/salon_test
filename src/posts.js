@@ -1,15 +1,14 @@
 import * as React from "react";
-import { SimpleList, List, Datagrid, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
+import { CloneButton, SimpleList, List, Datagrid, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
 
-import { Create, Edit, EditButton, ShowButton, SimpleForm, TextInput, BooleanInput, DateInput, SelectInput, ReferenceInput } from 'react-admin';
-import { ArrayInput, NumberInput, AutocompleteInput, RadioButtonGroupInput, SimpleFormIterator } from 'react-admin';
-
+import { ImageInput, Create, Edit, EditButton, ShowButton, SimpleForm, TextInput, BooleanInput, DateInput, SelectInput, ReferenceInput } from 'react-admin';
+import { SelectArrayInput, FormWithRedirect, NullableBooleanInput, Toolbar, DeleteButton, SaveButton, ArrayInput, NumberInput, AutocompleteInput, RadioButtonGroupInput, SimpleFormIterator } from 'react-admin';
 import { Filter } from 'react-admin';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, CardHeader, Button, Typography, CardActions  } from '@material-ui/core';
-
+import { Box, Paper, Card, CardContent, CardHeader, Button, Typography, CardActions  } from '@material-ui/core';
 import { useMediaQuery } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const PostFilter = (props) => (
     <Filter {...props}>
@@ -20,8 +19,9 @@ const PostFilter = (props) => (
     </Filter>
 );
 
-export const PostList = props => {
 
+
+export const PostList = props => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     return(
         <List filters={<PostFilter />} {...props}>
@@ -37,11 +37,10 @@ export const PostList = props => {
             ) : (
                 //use Datagrid for Desktop
                 <Datagrid>
-                    <TextField source="id" />
-                    <TextField source="제목" />
-                    <TextField source="작자" />
                     <TextField source="도시" />
                     <TextField source="세부주소" />
+                    <TextField source="제목" />
+                    <TextField source="작자" />
                     <TextField source="작품속지명" />
                     <ChipField source="서사양식" />
                     <ChipField source="서사성격" />
@@ -52,8 +51,9 @@ export const PostList = props => {
                     <ReferenceField label="작성자" source="userId" reference="users">
                         <TextField source="name" />
                     </ReferenceField>
-                    <EditButton />
-                    <ShowButton />
+                    <EditButton label="수정"/>
+                    <ShowButton label="보기"/>
+                    <CloneButton label="복제"/>
                 </Datagrid>
             )}
         </List>
@@ -62,84 +62,208 @@ export const PostList = props => {
 
 
 
-export const PostCreate = props => (
-    <Create {...props}>
-        <SimpleForm>
-            <TextInput source="도시" />
-            <TextInput source="세부주소" />
-            <TextInput source="작품속지명" />
-            <SelectInput source="서사양식" choices={[
-                { id: '소설', name: '소설' },
-                { id: '시', name: '시' },
-                { id: '수필', name: '수필' },
-                { id: '비평', name: '비평' },
-                { id: '희곡', name: '희곡' },
-                { id: '사진', name: '사진' },
-                { id: '영상', name: '영상' },
-                { id: '연극', name: '연극' },
-                { id: '문화', name: '문화' },
-                { id: '관광', name: '관광' },
-            ]} />
-            <SelectInput source="서사성격" choices={[
-                { id: '문학', name: '문학' },
-                { id: '비문학', name: '비문학' },
-            ]} />
-            <TextInput source="작자" />
-            <TextInput source="서사분류" />
-            <TextInput source="제목" />
-            <DateInput source="발표연도" />
-            <ArrayInput source="인용문">
-              <SimpleFormIterator>
-                  <TextInput label="본문내용" multiline source="content" />
-                  <NumberInput label="페이지" source="page" />
-              </SimpleFormIterator>
-            </ArrayInput>
-            <TextInput multiline source="내용" />
-            <TextInput multiline source="비고" />
-            <TextInput source="첨부자료" />
-            <BooleanInput source="전문확보" />
-        </SimpleForm>
-    </Create>
+const PostTitle = ({ record }) => {
+    return <span>Post {record ? `"${record.제목}"` : ''}</span>;
+};
+
+
+
+const PostCreateToolbar = props => (
+    <Toolbar {...props} >
+        <SaveButton
+            label="post.action.save_and_show"
+            redirect="show"
+            submitOnEnter={true}
+        />
+        <SaveButton
+            label="post.action.save_and_add"
+            redirect={false}
+            submitOnEnter={false}
+            variant="text"
+        />
+    </Toolbar>
 );
 
-export const PostEdit = props => (
-    <Edit {...props}>
-        <SimpleForm>
-            <TextInput disabled source="id" />
-            <TextInput source="도시" />
-            <TextInput source="세부주소" />
-            <TextInput source="작품속지명" />
-            <SelectInput source="서사양식" choices={[
-                { id: '소설', name: '소설' },
-                { id: '시', name: '시' },
-                { id: '수필', name: '수필' },
-                { id: '비평', name: '비평' },
-                { id: '희곡', name: '희곡' },
-                { id: '사진', name: '사진' },
-                { id: '영상', name: '영상' },
-                { id: '연극', name: '연극' },
-                { id: '문화', name: '문화' },
-                { id: '관광', name: '관광' },
-            ]} />
-            <SelectInput source="서사성격" choices={[
-                { id: '문학', name: '문학' },
-                { id: '비문학', name: '비문학' },
-            ]} />
-            <TextInput source="작자" />
-            <TextInput source="서사분류" />
-            <TextInput source="제목" />
-            <DateInput source="발표연도" />
-            <ArrayInput source="인용문">
-              <SimpleFormIterator>
-                  <TextInput label="본문내용" multiline source="content" />
-                  <NumberInput label="페이지" source="page" />
-              </SimpleFormIterator>
-            </ArrayInput>
-            <TextInput multiline source="내용" />
-            <TextInput multiline source="비고" />
-            <TextInput source="첨부자료" />
-            <BooleanInput source="전문확보" />
+export const PostCreate = props => {
+    const classes = useStyles();
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    return (
+        <Create {...props}>
+            {isSmall ? (
+                <SimpleEditForm/>
+            ) : (
+                <StandardEditForm />
+            )}
+        </Create>
+    )
+}
 
-        </SimpleForm>
-    </Edit>
-);
+
+
+const useStyles = makeStyles({
+    inlineBlock: { display: 'inline-flex', marginRight: '1rem' },
+});
+
+
+
+export const PostEdit = props => {
+    const classes = useStyles();
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    return (
+        <Edit {...props}>
+            {isSmall ? (
+                <SimpleEditForm/>
+            ) : (
+                <StandardEditForm />
+            )}
+        </Edit>
+    )
+}
+
+const segments = [
+    { id: '소설', name: '소설' },
+    { id: '시', name: '시' },
+    { id: '수필', name: '수필' },
+    { id: '비평', name: '비평' },
+    { id: '희곡', name: '희곡' },
+    { id: '사진', name: '사진' },
+    { id: '영상', name: '영상' },
+    { id: '연극', name: '연극' },
+    { id: '문화', name: '문화' },
+    { id: '관광', name: '관광' },
+];
+
+
+const SimpleEditForm = ( props, classes ) => (
+    <SimpleForm {...props} >
+        <TextInput source="도시"  fullWidth/>
+        <TextInput source="세부주소" formClassName={classes.inlineBlock}fullWidth/>
+        <TextInput variant="outlined" source="작품속지명" formClassName={classes.inlineBlock} fullWidth/>
+        <SelectInput formClassName={classes.inlineBlock} source="서사양식" choices={[
+            { id: '소설', name: '소설' },
+            { id: '시', name: '시' },
+            { id: '수필', name: '수필' },
+            { id: '비평', name: '비평' },
+            { id: '희곡', name: '희곡' },
+            { id: '사진', name: '사진' },
+            { id: '영상', name: '영상' },
+            { id: '연극', name: '연극' },
+            { id: '문화', name: '문화' },
+            { id: '관광', name: '관광' },
+        ]} fullWidth/>
+        <SelectInput formClassName={classes.inlineBlock} source="서사성격" choices={[
+            { id: '문학', name: '문학' },
+            { id: '비문학', name: '비문학' },
+        ]} fullWidth/>
+        <TextInput formClassName={classes.inlineBlock} source="작자" fullWidth/>
+
+
+        <TextInput formClassName={classes.inlineBlock} source="서사분류" fullWidth/>
+        <TextInput formClassName={classes.inlineBlock} source="제목" fullWidth/>
+        <DateInput source="발표연도" fullWidth/>
+        <ArrayInput source="인용문">
+          <SimpleFormIterator>
+              <TextInput label="본문내용" multiline source="content" fullWidth/>
+              <NumberInput label="페이지" source="page" fullWidth/>
+          </SimpleFormIterator>
+        </ArrayInput>
+        <TextInput multiline source="내용" fullWidth/>
+        <TextInput multiline source="비고" fullWidth/>
+        <ImageInput source="pictures" label="관련이미지" accept="image/*">
+            <ImageField source="src" title="title" fullWidth/>
+        </ImageInput>
+        <NullableBooleanInput source="전문확보" fullWidth/>
+        <TextInput variant="outlined" disabled="true" source="id" fullWidth/>
+    </SimpleForm>
+)
+
+const StandardEditForm = ({ ...props }) => {
+    return (
+        <FormWithRedirect
+            {...props}
+            render={formProps => (
+                // render your custom form here
+                <form>
+                    <Box p="1em">
+                        <Box display="flex">
+
+                            <Box flex={2} mr="1em">
+                                <Typography variant="h6" gutterBottom>도시서사DB</Typography>
+                                <Box display="flex">
+                                    <Box flex={1} mr="0.5em">
+                                        <TextInput source="도시" resource="post" fullWidth />
+                                    </Box>
+                                    <Box flex={2} ml="0.5em">
+                                        <TextInput source="세부주소" resource="post" fullWidth />
+                                    </Box>
+                                </Box>
+                                <Box display="flex">
+                                    <Box flex={1} mr="0.5em">
+                                        <TextInput source="작품속지명" resource="post" fullWidth />
+                                    </Box>
+                                    <Box flex={1} mr="0.5em" ml="0.5em">
+                                        <SelectInput source="서사양식" resource="post" choices={segments} fullWidth />
+                                    </Box>
+                                    <Box flex={1} mr="0.5em" ml="0.5em">
+                                        <SelectInput source="서사성격" choices={[
+                                            { id: '문학', name: '문학' },
+                                            { id: '비문학', name: '비문학' },
+                                        ]} fullWidth />
+                                    </Box>
+                                    <Box flex={1} ml="0.5em">
+                                        <TextInput source="서사분류" resource="post" fullWidth />
+                                    </Box>
+                                </Box>
+                                <Box display="flex">
+                                    <Box flex={1} mr="0.5em">
+                                        <TextInput source="작자" resource="post" fullWidth />
+                                    </Box>
+                                    <Box flex={1} mr="0.5em" ml="0.5em">
+                                        <TextInput source="제목" resource="post" fullWidth />
+                                    </Box>
+                                    <Box flex={1} mr="0.5em" ml="0.5em">
+                                        <TextInput source="발표매체" resource="post" fullWidth />
+                                    </Box>
+                                    <Box flex={1} ml="0.5em">
+                                        <DateInput source="발표연도" resource="post" fullWidth />
+                                    </Box>
+                                </Box>
+                            <Box mt="1em" />
+                                <TextInput multiline source="내용" resource="post" fullWidth/>
+                                <ArrayInput source="인용문" resource="post" fullWidth >
+                                  <SimpleFormIterator >
+                                      <TextInput label="본문내용" multiline source="content" fullWidth/>
+                                      <NumberInput label="페이지" source="page" />
+                                  </SimpleFormIterator>
+                                </ArrayInput>
+                                <TextInput multiline source="비고" resource="post" fullWidth/>
+                                <TextInput multiline source="출처" resource="post" fullWidth/>
+                            </Box>
+
+                            <Box flex={1} ml="1em">
+                                <Typography variant="h6" gutterBottom>메타정보 </Typography>
+                                <TextInput variant="outlined" disabled="true" source="id" resource="post" fullWidth/>
+
+                                <ImageInput source="pictures" label="관련이미지" accept="image/*">
+                                    <ImageField source="src" title="title" />
+                                </ImageInput>
+                                <NullableBooleanInput source="전문확보" resource="post" fullWidth/>
+                            </Box>
+
+                        </Box>
+                    </Box>
+                    <Toolbar>
+                    <Box display="flex" justifyContent="space-between" width="100%">
+                        <SaveButton
+                            redirect="list"
+                            saving={formProps.saving}
+                            handleSubmitWithRedirect={formProps.handleSubmitWithRedirect}
+                        />
+                        </Box>
+                    </Toolbar>
+
+                </form>
+            )}
+        />
+    );
+};

@@ -7,6 +7,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "firebase": "^7.15.0",
+    "global": "^4.4.0",
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^3.5.5",
     "react": "^16.13.1",
@@ -14,6 +15,7 @@
     "react-admin-firebase": "^3.1.24",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {
