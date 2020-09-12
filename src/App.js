@@ -7,8 +7,8 @@ import { PostShow } from './postShow';
 import { PostList, PostEdit, PostCreate} from './posts';
 import { addUploadFeature } from './addUploadFeature';
 
-import PostIcon from '@material-ui/icons/Book';
-import UserIcon from '@material-ui/icons/Group';
+// import PostIcon from '@material-ui/icons/Group';
+// import UserIcon from '@material-ui/icons/Group';
 
 import Dashboard from './Dashboard';
 import MyLayout from './MyLayout';
@@ -24,7 +24,9 @@ import {
 
 import config from './config';
 
-const options = {};
+const options = {
+  persistence: 'local',
+}//local:닫아도 로그인이 유지됨.
 
 const dataProvider = FirebaseDataProvider(config, options);
 const authProvider = FirebaseAuthProvider(config, options);
@@ -33,8 +35,8 @@ const uploadCapableDataProvider = addUploadFeature(dataProvider);
 // const dataProvider = jsonServerProvider('https://my-json-server.typicode.com/splex7/fake-json-db');
 const App = () => (
     <Admin theme={lightTheme} loginPage={CustomLoginPage} dashboard={Dashboard} authProvider={authProvider} layout={MyLayout}  dataProvider={uploadCapableDataProvider}>
-        <Resource name ="posts" list={PostList} create={PostCreate} edit={PostEdit} show={PostShow} icon={PostIcon} />
-        <Resource name ="users" list={UserList} icon={UserIcon} />
+        <Resource name ="posts" list={PostList} create={PostCreate} edit={PostEdit} show={PostShow}  />
+        <Resource name ="users" />
     </Admin>
 );
 export default App;

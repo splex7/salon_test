@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 const MyAppBar = props => {
     const classes = useStyles();
     return (
-        <AppBar {...props}>
+        <AppBar className={classes.appbar} {...props}>
             <Typography
                 variant="h9"
                 color="inherit"

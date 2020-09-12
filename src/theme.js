@@ -68,9 +68,9 @@ const themeBase = createMuiTheme({
         },
         MuiButton: {
             containedPrimary: {
-                backgroundColor: 'rgba(40, 40, 40, 1)',
+                backgroundColor: '#fab005',
                 '&:hover': {
-                    backgroundColor: 'rgba(120, 120, 120, 1)',
+                    backgroundColor: '#ffe066',
                 }
             },
             textPrimary: {
