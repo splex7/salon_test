@@ -2,12 +2,15 @@ import * as React from "react";
 import { List, Datagrid, SingleFieldList, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
 import { useGetOne, useShowController, ReferenceManyField, Show, ShowButton, TabbedShowLayout, SimpleShowLayout, Tab, ArrayField } from 'react-admin';
 
+
 //Design
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaQuery } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-
 import { Card, CardContent, CardHeader, Button, Typography, CardActions  } from '@material-ui/core';
+
+
+import MapContainer from "./MapKakao";
 
 const MyShow = props => {
     const {
@@ -53,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     fontWeight: '800',
   },
+  pictureMobile: {
+    width: '100vw'
+  }
 }));
 
 export const PostShow = (props) => {
@@ -62,7 +68,8 @@ export const PostShow = (props) => {
         <MyShow component = "div" {...props}>
             {isSmall ? (
               <SimpleShowLayout>
-                <TextField   source="제목"  />
+                <MapContainer props={props}/>
+                <TextField source="제목"  />
                 <TextField source="작자" />
                 <TextField source="도시" />
                 <TextField source="세부주소" />
@@ -72,9 +79,14 @@ export const PostShow = (props) => {
                 <TextField source="서사분류" />
                 <DateField source="발표연도" />
                 <BooleanField label="전문확보여부" source="전문확보" />
-                <ImageField source="pictures" />
+                <ImageField label="관련이미지" source="pictures.src" title="picture.title" className={classes.pictureMobile}/>
                 <TextField source="내용" />
-                <TextField source="인용문" />
+                <ArrayField source="인용문">
+                   <Datagrid>
+                    <TextField source="content" />
+                    <TextField source="page" />
+                   </Datagrid>
+                </ArrayField>
                 <TextField source="비고" />
                 <ReferenceField label="작성자" source="userId" reference="users">
                   <TextField source="name" />
@@ -83,6 +95,7 @@ export const PostShow = (props) => {
             ) : (
               <TabbedShowLayout className={classes.root} >
                 <Tab label="기본정보">
+                  <MapContainer props={props}/>
                   <TextField source="제목" className={classes.purpleBoldText} />
                   <TextField source="작자" />
                   <TextField source="도시" />
@@ -93,7 +106,7 @@ export const PostShow = (props) => {
                   <TextField source="서사분류" />
                   <DateField source="발표연도" />
                   <BooleanField label="전문확보여부" source="전문확보" />
-                  <ImageField source="pictures.src" title="picture.title"/>
+                  <ImageField label="관련이미지" source="pictures.src" title="picture.title"/>
                   <ReferenceField label="작성자" source="userId" reference="users">
                     <TextField source="name" />
                   </ReferenceField>
