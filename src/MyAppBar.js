@@ -19,7 +19,8 @@ const useStyles = makeStyles({
         left: '10px',
         width: '25px',
         height: '25px',
-        padding: '10px'
+        padding: '10px',
+
     },
     spacer: {
         transform : 'translateX(-10px)',

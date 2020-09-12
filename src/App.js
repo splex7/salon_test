@@ -7,8 +7,8 @@ import { PostShow } from './postShow';
 import { PostList, PostEdit, PostCreate} from './posts';
 import { addUploadFeature } from './addUploadFeature';
 
-// import PostIcon from '@material-ui/icons/Group';
-// import UserIcon from '@material-ui/icons/Group';
+import PostIcon from '@material-ui/icons/MenuBook';
+
 
 import Dashboard from './Dashboard';
 import MyLayout from './MyLayout';
@@ -35,7 +35,7 @@ const uploadCapableDataProvider = addUploadFeature(dataProvider);
 // const dataProvider = jsonServerProvider('https://my-json-server.typicode.com/splex7/fake-json-db');
 const App = () => (
     <Admin theme={lightTheme} loginPage={CustomLoginPage} dashboard={Dashboard} authProvider={authProvider} layout={MyLayout}  dataProvider={uploadCapableDataProvider}>
-        <Resource name ="posts" list={PostList} create={PostCreate} edit={PostEdit} show={PostShow}  />
+        <Resource name ="posts" list={PostList} create={PostCreate} edit={PostEdit} show={PostShow} icon={PostIcon} />
         <Resource name ="users" />
     </Admin>
 );

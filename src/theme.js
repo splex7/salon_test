@@ -6,6 +6,7 @@ const themeBase = createMuiTheme({
     },
     spacing: 0,
     palette: {
+        type: 'light',
         secondary: {
             light: '#5f5fc4',
             main: '#283593',
@@ -28,6 +29,9 @@ const themeBase = createMuiTheme({
             },
         },
         RaAppBar: {
+            root: {
+                backgroundColor: 'rgba(255, 255, 255, 1)'
+            },
             title: {
                 fontSize: '1rem'
             },
@@ -75,11 +79,6 @@ const themeBase = createMuiTheme({
             },
             textPrimary: {
                 color: 'rgba(40, 40, 40, 1)'
-            }
-        },
-        MuiPaper: {
-            root: {
-                backgroundColor: 'rgba(255, 255, 255, 1)'
             }
         },
         RaToolbar: {
