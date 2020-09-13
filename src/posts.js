@@ -1,6 +1,6 @@
 import * as React from "react";
-import { CloneButton, SimpleList, List, Datagrid, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
-import { ImageInput, Create, Edit, EditButton, ShowButton, SimpleForm, TextInput, BooleanInput, DateInput, SelectInput, ReferenceInput } from 'react-admin';
+import { CloneButton, SimpleList, List, Datagrid, ChipField, ImageField, FileField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
+import { ImageInput, FileInput, Create, Edit, EditButton, ShowButton, SimpleForm, TextInput, BooleanInput, DateInput, SelectInput, ReferenceInput } from 'react-admin';
 import { SelectArrayInput, FormWithRedirect, NullableBooleanInput, Toolbar, DeleteButton, SaveButton, ArrayInput } from 'react-admin';
 import { NumberInput, AutocompleteInput, RadioButtonGroupInput, SimpleFormIterator } from 'react-admin';
 import { Filter } from 'react-admin';
@@ -149,7 +149,7 @@ const SimpleEditForm = ( props, classes ) => (
         </ArrayInput>
         <TextInput multiline source="내용" />
         <TextInput multiline source="비고" />
-        <ImageInput source="pictures" label="관련이미지" accept="image/*">
+        <ImageInput source="pictures" multiple={true} label="관련된 이미지" accept="image/*" >
             <ImageField source="src" title="title" />
         </ImageInput>
         <NullableBooleanInput source="전문확보" />
@@ -220,7 +220,7 @@ const StandardEditForm = props => (
                         <Box flex={1} ml="1em">
                             <Typography variant="h6" gutterBottom>메타정보 </Typography>
                             <TextInput disabled source="id" resource="post" fullWidth />
-                            <ImageInput source="pictures" label="관련이미지" accept="image/*">
+                            <ImageInput source="pictures" multiple={true} label="관련된 이미지" accept="image/*" >
                                 <ImageField source="src" title="title" />
                             </ImageInput>
                             <NullableBooleanInput source="전문확보" resource="post" fullWidth />

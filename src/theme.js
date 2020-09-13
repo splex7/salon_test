@@ -98,6 +98,15 @@ const themeBase = createMuiTheme({
                 marginLeft: '1.5em'
             }
         },
+        MuiCardContent: {
+            root: {
+                padding: '0',
+                '& div': {
+                  padding: '0 5px'
+
+                }
+            }
+        },
         MuiFormGroup: {
             root: {
                 marginTop: '1em'

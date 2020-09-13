@@ -2,7 +2,6 @@ import * as React from "react";
 import { List, Datagrid, SingleFieldList, ChipField, ImageField, TextField, DateField, BooleanField, UrlField, ReferenceField } from 'react-admin';
 import { useGetOne, useShowController, ReferenceManyField, Show, ShowButton, TabbedShowLayout, SimpleShowLayout, Tab, ArrayField } from 'react-admin';
 
-
 //Design
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaQuery } from '@material-ui/core';
@@ -58,12 +57,14 @@ const useStyles = makeStyles((theme) => ({
   },
   pictureMobile: {
     width: '100vw'
-  }
+  },
+
 }));
 
 export const PostShow = (props) => {
     const classes = useStyles();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
     return(
         <MyShow component = "div" {...props}>
             {isSmall ? (
@@ -79,7 +80,7 @@ export const PostShow = (props) => {
                 <TextField source="서사분류" />
                 <DateField source="발표연도" />
                 <BooleanField label="전문확보여부" source="전문확보" />
-                <ImageField label="관련이미지" source="pictures.src" title="picture.title" className={classes.pictureMobile}/>
+                <ImageField source="pictures" title="title"  src="src"  className={classes.pictureMobile}/>
                 <TextField source="내용" />
                 <ArrayField source="인용문">
                    <Datagrid>
@@ -106,7 +107,7 @@ export const PostShow = (props) => {
                   <TextField source="서사분류" />
                   <DateField source="발표연도" />
                   <BooleanField label="전문확보여부" source="전문확보" />
-                  <ImageField label="관련이미지" source="pictures.src" title="picture.title"/>
+                  <ImageField source="pictures" title="title" src="src"    className={classes.pictureMobile}/>
                   <ReferenceField label="작성자" source="userId" reference="users">
                     <TextField source="name" />
                   </ReferenceField>

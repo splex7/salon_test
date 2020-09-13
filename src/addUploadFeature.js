@@ -42,3 +42,22 @@ export const addUploadFeature = requestHandler => (type, resource, params) => {
     // for other request types and resources, fall back to the default request handler
     return requestHandler(type, resource, params);
 };
+
+// export const addUploadFeature = (requestHandler: any) => (type: any, resource: any, params: any) => {
+//     if (type === 'UPDATE' || type === 'CREATE') {
+//         if (params.data.upload_images && params.data.upload_images.length) {
+//             const newPictures = params.data.upload_images.filter((p: any) => p.rawFile instanceof File);
+//
+//             return Promise.all(newPictures.map(convertFileToBase64))
+//                 .then((base64Pictures) => requestHandler(type, resource, {
+//                     ...params,
+//                     data: {
+//                         ...params.data,
+//                         upload_images: [...base64Pictures],
+//                     },
+//                 }));
+//         }
+//     }
+//     // for other request types and reources, fall back to the defautl request handler
+//     return requestHandler(type, resource, params);
+// };

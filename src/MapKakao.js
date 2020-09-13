@@ -28,7 +28,7 @@ const MapContainer = (props) => {
 
       }
     };
-    setTimeout(geocoder.addressSearch(address, callback),1500)
+    geocoder.addressSearch(address, callback)
   });
   return (
     <div
